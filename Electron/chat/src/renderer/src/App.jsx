@@ -1,12 +1,13 @@
 import React from "react"
-import Chat from "./components/Chat"
-import "./assets/App.css"
+import Register from "./components/Register"
+import Login from "./components/Login"
 
 function App() {
   return (
-    <div className="App">
-      <h1>Chat en Tiempo Real</h1>
-      <Chat />
+    <div>
+      <h1>Autenticación con Firebase + MySQL</h1>
+      <Register />
+      <Login />
     </div>
   )
 }
