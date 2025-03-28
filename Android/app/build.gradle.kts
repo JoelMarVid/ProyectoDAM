@@ -1,7 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-}
+    id("com.google.gms.google-services")
+} 
 
 android {
     namespace = "com.example.android"
@@ -36,13 +37,20 @@ android {
 }
 
 dependencies {
-
+    implementation (libs.kotlinx.coroutines.android)
+    implementation(platform(libs.firebase.bom))
+    implementation (libs.firebase.auth.ktx)
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+    implementation(libs.firebase.auth)
     implementation (libs.socket.io.client)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.firebase.database.ktx)
+    implementation(libs.firebase.firestore.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
