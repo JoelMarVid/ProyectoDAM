@@ -1,11 +1,14 @@
 import React, { useState } from "react"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
+import "../assets/styles.css"
 
 const Register = () => {
     const [nombre, setNombre] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [message, setMessage] = useState("")
+    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -16,12 +19,13 @@ const Register = () => {
                 password
             })
             setMessage(res.data.message)
+            setTimeout(() => navigate("/login"), 2000) 
         } catch (error) {
             setMessage(error.response.data.error || "Error en el registro")
         }
     }
     return (
-        <div>
+        <div className="form-container">
             <h2>Registro</h2>
             <form onSubmit={handleSubmit}>
                 <input

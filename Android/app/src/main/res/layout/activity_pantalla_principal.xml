@@ -3,36 +3,63 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:gravity="center"
+    android:padding="24dp"
+    android:background="@color/background_color">
 
-    <EditText
-        android:id="@+id/userEditText"
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Nombre de usuario" />
+        android:text="Bienvenido"
+        android:textSize="24sp"
+        android:textColor="@color/primary"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="16dp" />
 
     <EditText
         android:id="@+id/emailEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Correo electrónico" />
+        android:hint="Correo electrónico"
+        android:padding="12dp"
+        android:background="@drawable/input_background"
+        android:textColor="@color/text_primary"
+        android:textSize="16sp"
+        android:layout_marginBottom="12dp" />
 
     <EditText
         android:id="@+id/passwordEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Contraseña"
-        android:inputType="textPassword" />
-
-    <Button
-        android:id="@+id/registerButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Registrar" />
+        android:inputType="textPassword"
+        android:padding="12dp"
+        android:background="@drawable/input_background"
+        android:textColor="@color/text_primary"
+        android:textSize="16sp"
+        android:layout_marginBottom="16dp" />
 
     <Button
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Iniciar Sesión" />
+        android:text="Iniciar Sesión"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:background="@drawable/button_background"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="12dp" />
+
+    <TextView
+        android:id="@+id/registerLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿No tienes cuenta? Regístrate aquí"
+        android:textSize="16sp"
+        android:textColor="@color/secondary"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center_horizontal"/>
 </LinearLayout>

@@ -1,9 +1,11 @@
 package com.example.android.iyr
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.android.R
@@ -17,35 +19,23 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class PantallaPrincipal : AppCompatActivity() {
-    private val SERVER_URL = "http://10.0.2.2:3000/auth"  // Cambia esto con tu servidor
+    private val SERVER_URL = "http://10.0.2.2:3000/auth"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pantalla_principal)
 
-        val userEditText = findViewById<EditText>(R.id.userEditText)
         val emailEditText = findViewById<EditText>(R.id.emailEditText)
         val passwordEditText = findViewById<EditText>(R.id.passwordEditText)
-        val registerButton = findViewById<Button>(R.id.registerButton)
         val loginButton = findViewById<Button>(R.id.loginButton)
+        val registerLink = findViewById<TextView>(R.id.registerLink)
 
-        // Botón de Registro
-        registerButton.setOnClickListener {
-            val username = userEditText.text.toString()
-            val email = emailEditText.text.toString()
-            val password = passwordEditText.text.toString()
-
-            if (username.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
-                CoroutineScope(Dispatchers.Main).launch {
-                    registerUser(username, email, password)
-                }
-            } else {
-                Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT)
-                    .show()
-            }
+        // Navegar a la pantalla de Registro al hacer clic en el enlace
+        registerLink.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
         }
 
-        // Botón de Inicio de Sesión
         loginButton.setOnClickListener {
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
@@ -61,30 +51,12 @@ class PantallaPrincipal : AppCompatActivity() {
         }
     }
 
-    private suspend fun registerUser(username: String, email: String, password: String) {
-        val url = "$SERVER_URL/register"
-        val json = JSONObject()
-        json.put("nombre", username)
-        json.put("email", email)
-        json.put("password", password)
-
-        val response = sendPostRequest(url, json)
-        withContext(Dispatchers.Main) {
-            if (response != null) {
-                Toast.makeText(this@PantallaPrincipal, "Registro exitoso", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                Toast.makeText(this@PantallaPrincipal, "Error en el registro", Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
-    }
-
     private suspend fun loginUser(email: String, password: String) {
         val url = "$SERVER_URL/login"
         val json = JSONObject()
         json.put("email", email)
         json.put("password", password)
+
 
         val response = sendPostRequest(url, json)
         withContext(Dispatchers.Main) {
@@ -113,20 +85,11 @@ class PantallaPrincipal : AppCompatActivity() {
                 connection.setRequestProperty("Content-Type", "application/json")
                 connection.doOutput = true
 
-                val outputStreamWriter = OutputStreamWriter(connection.outputStream)
-                outputStreamWriter.write(json.toString())
-                outputStreamWriter.flush()
-
-                // Log para ver el código de respuesta
-                Log.d("RegisterRequest", "Response code: ${connection.responseCode}")
+                OutputStreamWriter(connection.outputStream).use { it.write(json.toString()) }
 
                 if (connection.responseCode == 200) {
                     connection.inputStream.bufferedReader().use { it.readText() }
                 } else {
-                    // Imprimir la respuesta de error del servidor
-                    val errorStream =
-                        connection.errorStream?.bufferedReader()?.use { it.readText() }
-                    Log.e("RegisterRequest", "Error response: $errorStream")
                     null
                 }
             } catch (e: Exception) {

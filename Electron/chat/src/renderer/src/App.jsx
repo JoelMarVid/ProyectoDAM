@@ -1,14 +1,17 @@
 import React from "react"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Register from "./components/Register"
 import Login from "./components/Login"
 
 function App() {
   return (
-    <div>
-      <h1>Autenticación con Firebase + MySQL</h1>
-      <Register />
-      <Login />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </Router>
   )
 }
 

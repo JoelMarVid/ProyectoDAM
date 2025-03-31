@@ -1,5 +1,7 @@
 import React, { useState } from "react"
+import { Link } from "react-router-dom"
 import axios from "axios"
+import "../assets/styles.css"
 
 const Login = () => {
     const [email, setEmail] = useState("")
@@ -20,7 +22,7 @@ const Login = () => {
     }
 
     return (
-        <div>
+        <div className="form-container">
             <h2>Iniciar sesión</h2>
             <form onSubmit={handleLogin}>
                 <input
@@ -37,6 +39,9 @@ const Login = () => {
                 />
                 <button type="submit">Iniciar sesión</button>
             </form>
+            <p>
+                No tienes cuenta?<Link to="/register" className="register-link">Registrate aquí</Link>
+            </p>
             <p>{message}</p>
         </div>
     )
