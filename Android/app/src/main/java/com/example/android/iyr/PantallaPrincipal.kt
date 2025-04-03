@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.android.R
+import com.example.android.pantalla_API.PantallaAPI
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -23,6 +24,17 @@ class PantallaPrincipal : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE)
+        val isLoggedIn = sharedPreferences.getBoolean("isLoggedIn", false)
+
+        if (isLoggedIn){
+            val intent = Intent(this, PantallaAPI::class.java)
+            startActivity(intent)
+            finish()
+            return
+        }
+
         setContentView(R.layout.activity_pantalla_principal)
 
         val emailEditText = findViewById<EditText>(R.id.emailEditText)
@@ -61,11 +73,20 @@ class PantallaPrincipal : AppCompatActivity() {
         val response = sendPostRequest(url, json)
         withContext(Dispatchers.Main) {
             if (response != null) {
+                val sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE)
+                val editor=sharedPreferences.edit()
+                editor.putBoolean("isLoggedIn", true)
+                editor.apply()
+
                 Toast.makeText(
                     this@PantallaPrincipal,
                     "Inicio de sesión exitoso",
                     Toast.LENGTH_SHORT
                 ).show()
+
+                val intent= Intent(this@PantallaPrincipal, PantallaAPI::class.java)
+                startActivity(intent)
+                finish()
             } else {
                 Toast.makeText(
                     this@PantallaPrincipal,
