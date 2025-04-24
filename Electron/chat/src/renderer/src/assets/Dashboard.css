@@ -1,0 +1,30 @@
+.dashboard-container {
+    padding: 20px;
+    text-align: center;
+    max-width: 100%; /* Limita el ancho máximo del contenedor */
+    overflow-x: hidden; /* Evita el desbordamiento horizontal */
+}
+
+.games-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    max-width: 100%; /* Limita el ancho máximo del contenedor */
+}
+
+.game-item {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    width: 150px; /* Ajusta el ancho del contenedor de cada juego */
+    overflow: hidden; /* Evita que el contenido desborde el contenedor */
+}
+
+.game-item img {
+    width: 100%; /* Ajusta la imagen al ancho del contenedor */
+    height: 100px; /* Define una altura fija */
+    object-fit: contain;
+    border-radius: 8px;
+}

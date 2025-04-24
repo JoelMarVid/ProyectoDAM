@@ -1,0 +1,8 @@
+<resources>
+    <string-array name="lista_juegos">
+        <item>League of Legends</item>
+        <item>Valorant</item>
+        <item>Overwatch</item>
+    </string-array>
+    <string name="app_name">Android</string>
+</resources>
