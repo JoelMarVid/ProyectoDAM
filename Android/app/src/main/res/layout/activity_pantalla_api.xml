@@ -5,20 +5,36 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <TextView
+        android:id="@+id/usernameTextView"
+        android:text="Usuario"
+        android:textSize="16sp"
+        android:layout_marginEnd="8dp"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/profileImageView"
+        android:src="@android:drawable/ic_menu_camera"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="centerCrop"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Foto de perfil"
+        android:clickable="true"
+        android:focusable="true"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
-    <Button
-        android:id="@+id/cerrarSesion"
-        android:layout_width="match_parent"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_tournament"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:padding="12dp"
-        android:text="Cerrar Sesión"
-        android:textSize="18sp"
-        android:backgroundTint="@color/primary"
-        android:textColor="@android:color/white"
-        android:gravity="center" />
+        android:contentDescription="Agregar Torneo"
+        android:src="@drawable/ic_add" />
 </LinearLayout>
