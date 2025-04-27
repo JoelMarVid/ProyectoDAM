@@ -81,18 +81,24 @@ router.post("/tournaments", async (req, res) => {
     })
 })
 
-router.get("/tournaments/:game", (req, res) => {
-    const { game } = req.params
-    console.log("Solicitud recibida para el juego:", game)
-    db.query("SELECT * FROM tournaments WHERE nombre_juego = ?", [game], (err, result) => {
-        if (err) {
-            console.error(err)
-            return res.status(500).json({ error: "Error al obtener los torneos" })
+router.get("/tournaments/:game", async (req, res) => {
+    const { game } = req.params;
+    console.log("Solicitud recibida para el juego:", game);
+
+    try {
+        const [rows] = await db.query("SELECT * FROM tournaments WHERE nombre_juego = ?", [game]);
+
+        if (rows.length === 0) {
+            console.log("No se encontraron torneos para el juego:", game);
+            return res.status(404).json({ error: "No se encontraron torneos para este juego" });
         }
-        console.log(result)
-        res.send(result)
-    })
-    console.log("Query enviada")
+
+        console.log("Torneos encontrados:", rows);
+        res.json(rows); // Solo se envía una respuesta aquí
+    } catch (error) {
+        console.error("Error al obtener torneos:", error);
+        res.status(500).json({ error: "Error en el servidor al obtener torneos" });
+    }
 })
 
 export default router

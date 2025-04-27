@@ -70,8 +70,9 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_pantalla_api.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_pantalla_api.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/android/pantalla_API/TournamentsActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/android/pantalla_API/TournamentsActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Node/config/firebase.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Node/config/firebase.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Node/routes/authRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Node/routes/authRoutes.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -418,12 +419,12 @@
       <map>
         <entry key="com.example.android">
           <value>
-            <CheckInfo lastCheckTimestamp="1745489485499" />
+            <CheckInfo lastCheckTimestamp="1745752160403" />
           </value>
         </entry>
         <entry key="com.example.android.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1745489485500" />
+            <CheckInfo lastCheckTimestamp="1745752160403" />
           </value>
         </entry>
       </map>

@@ -40,11 +40,11 @@ class TournamentsActivity : AppCompatActivity() {
         tvTitle.text = "Torneos de $gameName"
         rvTournaments.layoutManager = LinearLayoutManager(this)
 
-        fetchTournamentsByGame(gameName){ list ->
+        fetchTournamentsByGame(gameName) { list ->
             runOnUiThread {
-                if (list.isNullOrEmpty()){
+                if (list.isNullOrEmpty()) {
                     Log.e("Torneos", "Error")
-                }else{
+                } else {
                     Log.d("MINE", "Torneos recibidos: $tournaments")
                     tournaments.addAll(list)
                     rvTournaments.adapter = TournamentAdapter(tournaments)
@@ -54,11 +54,12 @@ class TournamentsActivity : AppCompatActivity() {
     }
 
     private fun fetchTournamentsByGame(gameName: String, callback: (List<Tournament>) -> Unit) {
-        val SERVER_URL = "http://10.0.2.2:3000/auth"
+        val SERVER_URL = "http://10.0.2.2:3000/auth/tournaments/$gameName"
         val client = OkHttpClient()
         val request = Request.Builder()
-            .url("${SERVER_URL}/tournaments/$gameName")
+            .url(SERVER_URL)
             .build()
+        Log.e("Buenos", "$request")
         client.newCall(request).enqueue(object : Callback {
 
             override fun onFailure(call: Call, e: IOException) {
@@ -66,23 +67,36 @@ class TournamentsActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call, response: Response) {
+                if (!response.isSuccessful) {
+                    Log.e("fetchTournaments", "Respuesta no exitosa: ${response.body()}")
+                    callback(emptyList())
+                    return
+                }
 
-                if (response.isSuccessful) {
-                    val body = response.body()?.string()
+                response.body()?.string()?.let { jsonString ->
+                    try {
+                        val tournamentsArray = JSONArray(jsonString)
+                        val tournamentsList = mutableListOf<Tournament>()
 
-                    val jsonArray = JSONArray(body)
-                    val tournaments = mutableListOf<Tournament>()
-                    for (i in 0 until jsonArray.length()) {
-                        val obj = jsonArray.getJSONObject(i)
-                        Log.i("MINE","$obj")
-                        val name = obj.getString("nombre")
-                        val game = obj.getString("nombre_juego")
-                        val fecha_ini = obj.getString("fecha_ini")
-                        val fecha_fin = obj.getString("fecha_fin")
-                        val dia_torn = obj.getString("dia_torn")
-                        tournaments.add(Tournament(name, game,fecha_ini,fecha_fin,dia_torn))
+                        for (i in 0 until tournamentsArray.length()) {
+                            val tournamentJson = tournamentsArray.getJSONObject(i)
+                            val tournament = Tournament(
+                                nombre = tournamentJson.getString("nombre"),
+                                nombre_juego = tournamentJson.getString("nombre_juego"),
+                                fecha_ini = tournamentJson.getString("fecha_ini"),
+                                fecha_fin = tournamentJson.getString("fecha_fin"),
+                                dia_torn = tournamentJson.getString("dia_torn")
+                            )
+                            tournamentsList.add(tournament)
+                        }
+                        callback(tournamentsList)
+                    } catch (e: Exception) {
+                        Log.e("fetchTournaments", "Error parseando JSON: ${e.message}")
+                        callback(emptyList())
                     }
-                    callback(tournaments)
+                } ?: run {
+                    Log.e("fetchTournaments", "Body nulo")
+                    callback(emptyList())
                 }
             }
         })
