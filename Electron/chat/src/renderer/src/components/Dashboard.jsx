@@ -52,11 +52,12 @@ const Dashboard = () => {
             <div className="games-container">
                 {gameData.map((game) => (
                     <div key={game.id} className="game-item">
-                        <h3>{game.name}</h3>
+                        <h3 onClick={() => navigate(`/torneos/${game.name}`)}>{game.name}</h3>
                         <img src={game.leagues[0].image_url} alt={game.name} className="game-image" />
                     </div>
                 ))}
             </div>
+            <button className="create-tournament-button" onClick={() => navigate("/crear-torneo")}>+</button>
             <button onClick={handleLogin}>Cerrar sesión</button>
         </div>
     )
