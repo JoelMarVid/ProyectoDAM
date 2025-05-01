@@ -52,15 +52,15 @@ router.post("/login", async (req, res) => {
 })
 
 router.get("/profile/:email", async (req, res) => {
-    const {email} = req.params
+    const { email } = req.params
     try {
         const [rows] = await db.query("SELECT * FROM usuarios WHERE email = ?", [email])
-        if (rows.length>0) {
+        if (rows.length > 0) {
             res.json({
-            nombre: rows[0].nombre,
-            imagen_perfil:rows[0].imagen_perfil||null
-        })
-        }else{
+                nombre: rows[0].nombre,
+                imagen_perfil: rows[0].imagen_perfil || null
+            })
+        } else {
             res.status(404).json({ error: "Usuario no encontrado" })
         }
     } catch (error) {
@@ -100,5 +100,27 @@ router.get("/tournaments/:game", async (req, res) => {
         res.status(500).json({ error: "Error en el servidor al obtener torneos" });
     }
 })
+
+router.post("/acceptTournament", async (req, res) => {
+    const { torneo_id, nombre, nombre_juego, fecha_ini, fecha_fin, dia_torn, usuario_id } = req.body
+    db.query("INSERT INTO tournamentsaccept (torneo_id, nombre_torneo, nombre_juego, fecha_ini, fecha_fin, dia_torn, usuario_id) VALUES (?, ?, ?, ?, ?, ?, ?)", [torneo_id, nombre, nombre_juego, fecha_ini, fecha_fin, dia_torn, usuario_id])
+})
+
+router.get("/acceptTournament/:userId", async (req, res) => {
+    const { userId } = req.params;
+    console.log("User ID recibido:", userId); 
+    try {
+        const [rows] = await db.query("SELECT * FROM tournamentsaccept WHERE usuario_id = ?", [userId]);
+
+        if (rows.length === 0) {
+            return res.status(404).json({ error: "No se encontraron torneos aceptados para este usuario" });
+        }
+
+        res.json(rows);
+    } catch (error) {
+        console.error("Error al obtener torneos aceptados:", error);
+        res.status(500).json({ error: "Error en el servidor" });
+    }
+});
 
 export default router

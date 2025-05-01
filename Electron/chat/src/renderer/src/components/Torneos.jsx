@@ -8,6 +8,25 @@ const Torneo = () => {
     const navigate = useNavigate()
     const [tournamentsData, setTournamentsData] = useState([])
 
+    const aceptarTournaments = async (tournaments) => {
+        const userId = localStorage.getItem("userId")
+        try {
+            axios.post("http://localhost:3000/auth/acceptTournament", {
+                torneo_id: tournaments.id,
+                nombre: tournaments.nombre,
+                nombre_juego: tournaments.nombre_juego,
+                fecha_ini: tournaments.fecha_ini,
+                fecha_fin: tournaments.fecha_fin,
+                dia_torn: tournaments.dia_torn,
+                usuario_id: userId
+            })
+            alert("Torneo aceptado")
+        } catch (error) {
+            console.error(error)
+            alert("Error al aceptar el torneo")
+        }
+    }
+
     useEffect(() => {
         const fetchTournamentsData = async () => {
             try {
@@ -33,15 +52,15 @@ const Torneo = () => {
                         <p>Fecha de inicio: {tournaments.fecha_ini}</p>
                         <p>Fecha de fin: {tournaments.fecha_fin}</p>
                         <p>Fecha del torneo: {tournaments.dia_torn}</p>
-                        
+                        <button onClick={() => aceptarTournaments(tournaments)}>Aceptar</button>
                     </div>
                 ))
             ) : (
                 <div>
-                <p>No hay torneos disponibles.</p>
+                    <p>No hay torneos disponibles.</p>
                 </div>
             )}
-            <button onClick={() => navigate("/")}>Volver</button> 
+            <button onClick={() => navigate("/")}>Volver</button>
         </div>
     )
 }

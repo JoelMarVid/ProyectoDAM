@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../assets/Dashboard.css"
+import Profile from "./Profile";
 
 const Dashboard = () => {
     const [gameData, setGameData] = useState([])
@@ -42,12 +43,16 @@ const Dashboard = () => {
     const handleLogin = () => {
         localStorage.removeItem("authToken")
         localStorage.removeItem("userName")
+        localStorage.removeItem("userId")
         navigate("/login")
     }
 
     return (
         <div className="dashboard-container">
-            <h2>Dashboard</h2>
+            <div className="dashboard-header">
+                <h2>Dashboard</h2>
+                <Profile />
+            </div>
             {error && <p className="error">{error}</p>}
             <div className="games-container">
                 {gameData.map((game) => (

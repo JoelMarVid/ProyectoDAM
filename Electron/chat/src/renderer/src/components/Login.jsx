@@ -20,6 +20,8 @@ const Login = () => {
 
             localStorage.setItem("authToken", token)
             localStorage.setItem("userName", usuario.nombre)
+            localStorage.setItem("userId", usuario.id)
+            console.log(usuario.id)
 
             setMessage(`Bienvenido, ${res.data.usuario.nombre}`)
             setTimeout(() => navigate("/dashboard"), 2000)
