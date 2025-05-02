@@ -49,9 +49,9 @@ const Torneo = () => {
                     <div className="tournament">
                         <h3>{tournaments.nombre}</h3>
                         <p>Juego: {tournaments.nombre_juego}</p>
-                        <p>Fecha de inicio: {tournaments.fecha_ini}</p>
-                        <p>Fecha de fin: {tournaments.fecha_fin}</p>
-                        <p>Fecha del torneo: {tournaments.dia_torn}</p>
+                        <p>Fecha de inicio: {new Date(tournaments.fecha_ini).toLocaleDateString()}</p>
+                        <p>Fecha de fin: {new Date(tournaments.fecha_fin).toLocaleDateString()}</p>
+                        <p>Fecha del torneo: {new Date(tournaments.dia_torn).toLocaleDateString()}</p>
                         <button onClick={() => aceptarTournaments(tournaments)}>Aceptar</button>
                     </div>
                 ))

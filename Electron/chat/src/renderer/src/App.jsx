@@ -6,6 +6,7 @@ import Dashboard from "./components/Dashboard"
 import Torneo from "./components/Torneos"
 import CrearTorneos from "./components/CrearTorneos"
 import VerTorneos from "./components/VerTorneos"
+import VerPerfil from "./components/VerPerfil"
 
 const App = () => {
   const navigate = useNavigate()
@@ -24,6 +25,7 @@ const App = () => {
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/verPerfil" element={<VerPerfil />} />
       <Route path="/crear-torneo" element={<CrearTorneos/>}/>
       <Route path="/verTorneos" element={<VerTorneos/>}/>
       <Route path="/torneos/:name" element={<Torneo/>}/>

@@ -22,6 +22,13 @@ const Profile = () => {
         setMenuVisible(!menuVisible)
     }
 
+    const handleLogin = () => {
+        localStorage.removeItem("authToken")
+        localStorage.removeItem("userName")
+        localStorage.removeItem("userId")
+        navigate("/login")
+    }
+
     return (
         <div className="profile-container">
             <div className="profile-image-container" onClick={toggleMenu}>
@@ -44,9 +51,9 @@ const Profile = () => {
 
             {menuVisible && (
                 <div className="dropdown-menu">
-                    <button onClick={() => navigate("/verTorneos")}>Ver perfil</button>
+                    <button onClick={() => navigate("/verPerfil")}>Ver perfil</button>
                     <button onClick={() => alert("Editar perfil")}>Editar perfil</button>
-                    <button onClick={() => alert("Cerrar sesión")}>Cerrar sesión</button>
+                    <button onClick={handleLogin}>Cerrar sesión</button>
                 </div>
             )}
         </div>

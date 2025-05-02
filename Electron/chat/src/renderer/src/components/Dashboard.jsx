@@ -40,13 +40,6 @@ const Dashboard = () => {
         fetchGameData()
     }, [navigate])
 
-    const handleLogin = () => {
-        localStorage.removeItem("authToken")
-        localStorage.removeItem("userName")
-        localStorage.removeItem("userId")
-        navigate("/login")
-    }
-
     return (
         <div className="dashboard-container">
             <div className="dashboard-header">
@@ -63,7 +56,6 @@ const Dashboard = () => {
                 ))}
             </div>
             <button className="create-tournament-button" onClick={() => navigate("/crear-torneo")}>+</button>
-            <button onClick={handleLogin}>Cerrar sesión</button>
         </div>
     )
 }
