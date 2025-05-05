@@ -7,7 +7,7 @@ import admin from "../config/firebase.js"
 const router = express.Router()
 
 router.post("/register", async (req, res) => {
-    const { email, password, nombre } = req.body
+    const { email, password, nombre, rol ="user" } = req.body
 
     try {
         const [userExists] = await db.query("SELECT * FROM usuarios WHERE email = ?", [email])
@@ -18,7 +18,7 @@ router.post("/register", async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10)
 
-        await db.query("INSERT INTO usuarios (email, password, nombre) VALUES (?, ?, ?)", [email, hashedPassword, nombre])
+        await db.query("INSERT INTO usuarios (email, password, nombre, rol) VALUES (?, ?, ?, ?)", [email, hashedPassword, nombre, rol])
 
         res.json({ message: "Usuario registrado correctamente" })
     } catch (error) {
@@ -43,9 +43,9 @@ router.post("/login", async (req, res) => {
             return res.status(400).json({ error: "Usuario o contraseña incorrectos" })
         }
 
-        const token = jwr.sign({ id: usuario.id, email: usuario.email }, process.env.JWT_SECRET, { expiresIn: "1h" })
+        const token = jwr.sign({ id: usuario.id, email: usuario.email, rol: usuario.rol }, process.env.JWT_SECRET, { expiresIn: "1h" })
 
-        res.json({ message: "Inicio de sesión exitoso", token, usuario })
+        res.json({ message: "Inicio de sesión exitoso", token, usuario, rol: usuario.rol })
     } catch (error) {
         res.status(500).json({ error: "Error en el servidor" })
     }

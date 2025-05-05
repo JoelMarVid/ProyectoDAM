@@ -21,6 +21,7 @@ const Login = () => {
             localStorage.setItem("authToken", token)
             localStorage.setItem("userName", usuario.nombre)
             localStorage.setItem("userId", usuario.id)
+            localStorage.setItem("userRole", usuario.rol)
             console.log(usuario.id)
 
             setMessage(`Bienvenido, ${res.data.usuario.nombre}`)
