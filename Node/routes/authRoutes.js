@@ -7,7 +7,7 @@ import admin from "../config/firebase.js"
 const router = express.Router()
 
 router.post("/register", async (req, res) => {
-    const { email, password, nombre, rol ="user" } = req.body
+    const { email, password, nombre, rol = "user" } = req.body
 
     try {
         const [userExists] = await db.query("SELECT * FROM usuarios WHERE email = ?", [email])
@@ -101,14 +101,35 @@ router.get("/tournaments/:game", async (req, res) => {
     }
 })
 
+router.delete("/tournaments/:id", async (req, res) => {
+    const {id} = req.params
+
+    const [tournamentsExist] = await db.query("SELECT * FROM tournaments WHERE id = ?", [id])
+
+    if (tournamentsExist.length === 0) {
+        return res.status(404).json({ error: "No se encontró el torneo" })
+    }
+
+    db.query("DELETE FROM tournamentsaccept WHERE torneo_id = ?", [id])
+    db.query("DELETE FROM tournaments WHERE id = ?", [id])
+    db.query("DELETE FROM reportes WHERE torneo_id = ?", [id])
+})
+
 router.post("/acceptTournament", async (req, res) => {
     const { torneo_id, nombre, nombre_juego, fecha_ini, fecha_fin, dia_torn, usuario_id } = req.body
+
+    const [tournamentsExist] = await db.query("SELECT * FROM tournamentsaccept WHERE torneo_id = ? AND usuario_id = ?", [torneo_id, usuario_id])
+
+    if (tournamentsExist.length > 0) {
+        return res.status(400).json({ error: "Ya has aceptado este torneo" })
+    }
+
     db.query("INSERT INTO tournamentsaccept (torneo_id, nombre_torneo, nombre_juego, fecha_ini, fecha_fin, dia_torn, usuario_id) VALUES (?, ?, ?, ?, ?, ?, ?)", [torneo_id, nombre, nombre_juego, fecha_ini, fecha_fin, dia_torn, usuario_id])
 })
 
 router.get("/acceptTournament/:userId", async (req, res) => {
     const { userId } = req.params;
-    console.log("User ID recibido:", userId); 
+    console.log("User ID recibido:", userId);
     try {
         const [rows] = await db.query("SELECT * FROM tournamentsaccept WHERE usuario_id = ?", [userId]);
 
@@ -121,6 +142,32 @@ router.get("/acceptTournament/:userId", async (req, res) => {
         console.error("Error al obtener torneos aceptados:", error);
         res.status(500).json({ error: "Error en el servidor" });
     }
-});
+})
+
+router.post("/report/:torneoId", async (req, res) => {
+    const { torneoId } = req.params
+    const { usuario_name, motivo } = req.body
+    const [reportExists] = await db.query("SELECT * FROM reportes WHERE torneo_id = ? AND nombre_usuario = ?", [torneoId, usuario_name])
+    if (reportExists.length > 0) {
+        return res.status(400).json({ error: "Ya has reportado este torneo" })
+    }
+    db.query("INSERT INTO reportes (torneo_id, nombre_usuario, motivo) VALUES (?, ?, ?)", [torneoId, usuario_name, motivo])
+})
+
+router.delete("/report/:id", async (req, res) => {
+    const { id } = req.params
+
+    db.query("DELETE FROM reportes WHERE id = ?", [id])
+})
+
+router.get("/report", async (req, res) => {
+    const [rows] = await db.query("SELECT * FROM reportes")
+    if (rows.length === 0) {
+        return res.status(404).json({ error: "No se encontraron reportes" })
+    }
+    res.json(rows)
+})
+
+
 
 export default router

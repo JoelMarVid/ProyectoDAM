@@ -10,8 +10,8 @@ const VerPerfil = () => {
         <div>
             <h1>{nameUser}</h1>
             <button onClick={() => navigate("/verTorneos")}>Ver torneos</button>
+            {roleUser === "admin" && <button onClick={() => navigate("/VerReportes")}>Reportes</button>}
             <button onClick={() => navigate("/dashboard")}>Volver</button>
-            {roleUser === "admin" && <button onClick={() => alert("Eres administrador")}>Panel de Administrador</button>}
         </div>
     )
 }

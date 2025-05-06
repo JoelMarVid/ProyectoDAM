@@ -53,6 +53,7 @@ const Torneo = () => {
                         <p>Fecha de fin: {new Date(tournaments.fecha_fin).toLocaleDateString()}</p>
                         <p>Fecha del torneo: {new Date(tournaments.dia_torn).toLocaleDateString()}</p>
                         <button onClick={() => aceptarTournaments(tournaments)}>Aceptar</button>
+                        <button onClick={() => navigate(`/report/${tournaments.id}`)}>Reportar</button>
                     </div>
                 ))
             ) : (
