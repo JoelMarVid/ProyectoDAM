@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const VerTorneos = () => {
@@ -11,7 +11,7 @@ const VerTorneos = () => {
     useEffect(() => {
         const fetchTournamentsData = async () => {
             try {
-                const res = await axios.get("http://localhost:3000/auth/acceptTournament/"+userId)
+                const res = await axios.get("http://localhost:3000/auth/acceptTournament/" + userId)
                 const data = res.data
                 console.log(data)
                 setTournamentsData(data)
@@ -24,7 +24,7 @@ const VerTorneos = () => {
         console.log(tournamentsData.length)
     }, [userId])
 
-    return(
+    return (
         <div>
             {tournamentsData.length > 0 ? (
                 tournamentsData.map((tournaments) => (
@@ -34,6 +34,7 @@ const VerTorneos = () => {
                         <p>Fecha de inicio: {new Date(tournaments.fecha_ini).toLocaleDateString()}</p>
                         <p>Fecha de fin: {new Date(tournaments.fecha_fin).toLocaleDateString()}</p>
                         <p>Fecha del torneo: {new Date(tournaments.dia_torn).toLocaleDateString()}</p>
+                        <button onClick={() => navigate(`/verParticipantes/${tournaments.torneo_id}`)}>Ver participantes</button>
                     </div>
                 ))
             ) : (
@@ -41,6 +42,7 @@ const VerTorneos = () => {
                     <p>No has aceptado ningun torneo.</p>
                 </div>
             )}
+            <br />
             <button onClick={() => navigate("/dashboard")}>Volver</button>
         </div>
     )

@@ -10,6 +10,7 @@ const Torneo = () => {
 
     const aceptarTournaments = async (tournaments) => {
         const userId = localStorage.getItem("userId")
+        const userName = localStorage.getItem("userName")
         try {
             axios.post("http://localhost:3000/auth/acceptTournament", {
                 torneo_id: tournaments.id,
@@ -18,7 +19,8 @@ const Torneo = () => {
                 fecha_ini: tournaments.fecha_ini,
                 fecha_fin: tournaments.fecha_fin,
                 dia_torn: tournaments.dia_torn,
-                usuario_id: userId
+                usuario_id: userId,
+                nombre_usuario: userName
             })
             alert("Torneo aceptado")
         } catch (error) {

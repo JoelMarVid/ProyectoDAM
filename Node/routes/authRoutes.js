@@ -116,7 +116,7 @@ router.delete("/tournaments/:id", async (req, res) => {
 })
 
 router.post("/acceptTournament", async (req, res) => {
-    const { torneo_id, nombre, nombre_juego, fecha_ini, fecha_fin, dia_torn, usuario_id } = req.body
+    const { torneo_id, nombre, nombre_juego, fecha_ini, fecha_fin, dia_torn, usuario_id, nombre_usuario } = req.body
 
     const [tournamentsExist] = await db.query("SELECT * FROM tournamentsaccept WHERE torneo_id = ? AND usuario_id = ?", [torneo_id, usuario_id])
 
@@ -124,7 +124,7 @@ router.post("/acceptTournament", async (req, res) => {
         return res.status(400).json({ error: "Ya has aceptado este torneo" })
     }
 
-    db.query("INSERT INTO tournamentsaccept (torneo_id, nombre_torneo, nombre_juego, fecha_ini, fecha_fin, dia_torn, usuario_id) VALUES (?, ?, ?, ?, ?, ?, ?)", [torneo_id, nombre, nombre_juego, fecha_ini, fecha_fin, dia_torn, usuario_id])
+    db.query("INSERT INTO tournamentsaccept (torneo_id, nombre_torneo, nombre_juego, fecha_ini, fecha_fin, dia_torn, usuario_id, nombre_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", [torneo_id, nombre, nombre_juego, fecha_ini, fecha_fin, dia_torn, usuario_id, nombre_usuario])
 })
 
 router.get("/acceptTournament/:userId", async (req, res) => {
@@ -141,6 +141,19 @@ router.get("/acceptTournament/:userId", async (req, res) => {
     } catch (error) {
         console.error("Error al obtener torneos aceptados:", error);
         res.status(500).json({ error: "Error en el servidor" });
+    }
+})
+
+router.get("/tournamentuser/:torneo_id", async (req, res) => {
+    const { torneo_id } = req.params
+    try {
+        const [rows] = await db.query("SELECT * FROM tournamentsaccept WHERE torneo_id = ?", [torneo_id])
+        if (rows.length === 0) {
+            return res.status(404).json({ error: "No se encontraron torneos" })
+        }
+        res.json(rows);
+    } catch (error) {
+        res.status(500).json({ error: "Error en el servidor" })
     }
 })
 
