@@ -10,6 +10,7 @@ import VerPerfil from "./components/VerPerfil"
 import Reportes from "./components/Reportes"
 import VerReportes from "./components/VerReportes"
 import VerParticipante from "./components/verParticipante"
+import CalendarioTorneos from "./components/CalendarioTorneos"
 
 const App = () => {
   const navigate = useNavigate()
@@ -35,6 +36,7 @@ const App = () => {
       <Route path="/report/:torneo_id" element={<Reportes/>}/>
       <Route path="/verReportes" element={<VerReportes/>}/>
       <Route path="/verParticipantes/:id" element={<VerParticipante/>}/>
+      <Route path="/Calendario" element={<CalendarioTorneos/>}/>
     </Routes>
   )
 }

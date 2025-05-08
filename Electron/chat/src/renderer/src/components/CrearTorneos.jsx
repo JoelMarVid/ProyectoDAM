@@ -71,7 +71,7 @@ const CrearTorneos = () => {
                     value={dia_torn}
                     onChange={(e) => setDiaTorn(e.target.value)}
                 />
-                <button type="submit">Crear Torneo</button>
+                <button id="button" type="submit">Crear Torneo</button>
             </form>
         </div>
     )

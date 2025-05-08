@@ -54,8 +54,8 @@ const Torneo = () => {
                         <p>Fecha de inicio: {new Date(tournaments.fecha_ini).toLocaleDateString()}</p>
                         <p>Fecha de fin: {new Date(tournaments.fecha_fin).toLocaleDateString()}</p>
                         <p>Fecha del torneo: {new Date(tournaments.dia_torn).toLocaleDateString()}</p>
-                        <button onClick={() => aceptarTournaments(tournaments)}>Aceptar</button>
-                        <button onClick={() => navigate(`/report/${tournaments.id}`)}>Reportar</button>
+                        <button id="button" onClick={() => aceptarTournaments(tournaments)}>Aceptar</button>
+                        <button id="button" onClick={() => navigate(`/report/${tournaments.id}`)}>Reportar</button>
                     </div>
                 ))
             ) : (
@@ -63,7 +63,7 @@ const Torneo = () => {
                     <p>No hay torneos disponibles.</p>
                 </div>
             )}
-            <button onClick={() => navigate("/")}>Volver</button>
+            <button id="button" onClick={() => navigate("/")}>Volver</button>
         </div>
     )
 }

@@ -47,7 +47,7 @@ const Login = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <button type="submit">Iniciar sesión</button>
+                <button id="button" type="submit">Iniciar sesión</button>
             </form>
             <p>
                 No tienes cuenta?<Link to="/register" className="register-link">Registrate aquí</Link>

@@ -34,7 +34,7 @@ const VerTorneos = () => {
                         <p>Fecha de inicio: {new Date(tournaments.fecha_ini).toLocaleDateString()}</p>
                         <p>Fecha de fin: {new Date(tournaments.fecha_fin).toLocaleDateString()}</p>
                         <p>Fecha del torneo: {new Date(tournaments.dia_torn).toLocaleDateString()}</p>
-                        <button onClick={() => navigate(`/verParticipantes/${tournaments.torneo_id}`)}>Ver participantes</button>
+                        <button id="button" onClick={() => navigate(`/verParticipantes/${tournaments.torneo_id}`)}>Ver participantes</button>
                     </div>
                 ))
             ) : (
@@ -43,7 +43,7 @@ const VerTorneos = () => {
                 </div>
             )}
             <br />
-            <button onClick={() => navigate("/dashboard")}>Volver</button>
+            <button id="button" onClick={() => navigate("/dashboard")}>Volver</button>
         </div>
     )
 

@@ -55,6 +55,7 @@
 .dropdown-menu button {
     padding: 10px;
     background: none;
+    color: white;
     border: none;
     text-align: left;
     cursor: pointer;

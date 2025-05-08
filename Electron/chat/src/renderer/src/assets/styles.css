@@ -37,7 +37,7 @@ input {
 }
 
 /* Botón */
-button {
+#button {
     width: 100%;
     padding: 10px;
     background: #ff7eb3;
@@ -49,7 +49,7 @@ button {
     transition: 0.3s;
 }
 
-button:hover {
+#button:hover {
     background: #ff4f8b;
 }
 

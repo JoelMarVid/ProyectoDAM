@@ -32,7 +32,7 @@ const Reportes = () => {
                     value={motivo}
                     onChange={(e) => setMotivo(e.target.value)}
                 />
-                <button type="submit">Enviar Reporte</button>
+                <button id="button" type="submit">Enviar Reporte</button>
             </form>
         </div>
     )

@@ -47,8 +47,8 @@ const VerReportes = () => {
                         <h3>{reportes.motivo}</h3>
                         <p>Usuario: {reportes.nombre_usuario}</p>
                         <p>Torneo: {reportes.torneo_id}</p>
-                        <button onClick={() => deleteTournament(reportes.torneo_id)}>Aceptar</button>
-                        <button onClick={() => deleteReport(reportes.id)}>Rechazar</button>
+                        <button id="button" onClick={() => deleteTournament(reportes.torneo_id)}>Aceptar</button>
+                        <button id="button" onClick={() => deleteReport(reportes.id)}>Rechazar</button>
                     </div>
                 ))
             ) : (
@@ -56,7 +56,7 @@ const VerReportes = () => {
                     <p>No hay reportes.</p>
                 </div>
             )}
-            <button onClick={() => navigate("/dashboard")}>Volver</button>
+            <button id="button" onClick={() => navigate("/dashboard")}>Volver</button>
         </div>
     )
 
