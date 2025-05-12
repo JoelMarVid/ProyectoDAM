@@ -102,7 +102,7 @@ router.get("/tournaments/:game", async (req, res) => {
 })
 
 router.delete("/tournaments/:id", async (req, res) => {
-    const {id} = req.params
+    const { id } = req.params
 
     const [tournamentsExist] = await db.query("SELECT * FROM tournaments WHERE id = ?", [id])
 
@@ -180,6 +180,48 @@ router.get("/report", async (req, res) => {
     }
     res.json(rows)
 })
+
+router.get('/emparejamientos/:torneo_id', async (req, res) => {
+    const { torneo_id } = req.params;
+
+    try {
+        const [rows] = await db.query(
+            `SELECT 
+                e.id,
+                e.torneo_id,
+                u1.nombre AS participante1_nombre,
+                u2.nombre AS participante2_nombre
+            FROM emparejamientos e
+            JOIN usuarios u1 ON e.participante1_id = u1.id
+            JOIN usuarios u2 ON e.participante2_id = u2.id
+            WHERE e.torneo_id = ?`,
+            [torneo_id]
+        );
+        res.status(200).json(rows);
+    } catch (error) {
+        console.error('Error al obtener los emparejamientos:', error);
+        res.status(500).send('Error al obtener los emparejamientos.');
+    }
+})
+
+router.post('/emparejamientos/:torneo_id', async (req, res) => {
+    const { torneo_id } = req.params;
+    const emparejamientos = req.body;
+
+    console.log('Datos recibidos para insertar:', emparejamientos);
+    try {
+        for (const emparejamiento of emparejamientos) {
+            await db.query(
+                'INSERT INTO emparejamientos (torneo_id, participante1_id, participante2_id) VALUES (?, ?, ?)',
+                [torneo_id, emparejamiento.participante1_id, emparejamiento.participante2_id]
+            );
+        }
+        res.status(201).send('Emparejamientos guardados correctamente.');
+    } catch (error) {
+        console.error('Error al guardar los emparejamientos:', error);
+        res.status(500).send('Error al guardar los emparejamientos.');
+    }
+});
 
 
 

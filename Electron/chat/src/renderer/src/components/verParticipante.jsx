@@ -1,9 +1,10 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 
 const VerParticipante = () => {
     const { id } = useParams()
+    const navigate = useNavigate()
     const [tournamentsData, setTournamentsData] = useState([])
     console.log(id)
     useEffect(() => {
@@ -34,6 +35,7 @@ const VerParticipante = () => {
                     <p>No hay participantes.</p>
                 </div>
             )}
+            <button id="button" onClick={() => navigate("/dashboard")}>Volver</button>
         </div>
     )
 }

@@ -11,6 +11,7 @@ import Reportes from "./components/Reportes"
 import VerReportes from "./components/VerReportes"
 import VerParticipante from "./components/verParticipante"
 import CalendarioTorneos from "./components/CalendarioTorneos"
+import Emparejamiento from "./components/Emparejamiento"
 
 const App = () => {
   const navigate = useNavigate()
@@ -37,6 +38,7 @@ const App = () => {
       <Route path="/verReportes" element={<VerReportes/>}/>
       <Route path="/verParticipantes/:id" element={<VerParticipante/>}/>
       <Route path="/Calendario" element={<CalendarioTorneos/>}/>
+      <Route path="/emparejamiento/:id" element={<Emparejamiento/>}/>
     </Routes>
   )
 }
