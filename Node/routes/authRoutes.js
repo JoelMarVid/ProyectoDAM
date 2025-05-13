@@ -181,6 +181,18 @@ router.get("/report", async (req, res) => {
     res.json(rows)
 })
 
+router.delete("/eliminarJugador/:jugadorId", async (req, res) => {
+    const { jugadorId } = req.params
+    try {
+        await db.query("DELETE FROM tournamentsaccept WHERE usuario_id = ?", [jugadorId])
+        await db.query("DELETE FROM emparejamientos WHERE participante1_id = ? OR participante2_id = ?", [jugadorId, jugadorId])
+        res.status(200).json({ message: "Jugador eliminado correctamente" })
+    } catch (error) {
+        console.error("Error al eliminar el jugador:", error)
+        res.status(500).json({ error: "Error al eliminar el jugador" })
+    }
+})
+
 router.get('/emparejamientos/:torneo_id', async (req, res) => {
     const { torneo_id } = req.params;
 

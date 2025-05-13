@@ -7,6 +7,7 @@ const Emparejamiento = () => {
     const navigate = useNavigate()
     const [participantes, setParticipantes] = useState([])
     const [emparejamientos, setEmparejamientos] = useState([])
+    const [monstrarMenu, setMostrarMenu] = useState(false)
 
     useEffect(() => {
         const fetchParticipantes = async () => {
@@ -46,13 +47,40 @@ const Emparejamiento = () => {
         }
 
         await axios.post(`http://localhost:3000/auth/emparejamientos/${id}`, nuevosEmparejamientos)
-        setEmparejamientos(nuevosEmparejamientos)
+        const emparejamientosRes = await axios.get(`http://localhost:3000/auth/emparejamientos/${id}`);
+        setEmparejamientos(emparejamientosRes.data)
+    }
+
+    const eliminarJugador = async (jugadorId) => {
+        try {
+            await axios.delete(`http://localhost:3000/auth/eliminarJugador/${jugadorId}`)
+            setParticipantes(participantes.filter((p) => p.usuario_id !== jugadorId))
+            const emparejamientosRes = await axios.get(`http://localhost:3000/auth/emparejamientos/${id}`);
+            setEmparejamientos(emparejamientosRes.data);
+            alert("Jugador eliminado correctamente")
+        } catch (error) {
+            console.error("Error al eliminar el jugador:", error)
+        }
     }
 
     return (
         <div>
             <h2>Emparejamiento de Participantes</h2>
             <button onClick={realizarEmparejamiento}>Realizar Emparejamiento</button>
+            <button onClick={() => setMostrarMenu(!monstrarMenu)}>
+                {monstrarMenu ? "Cerrar Menú de Eliminación" : "Abrir Menú de Eliminación"}
+            </button>
+            {monstrarMenu && (
+                <div>
+                    <h3>Eliminar Jugadores</h3>
+                    {participantes.map((participante) => (
+                        <div key={participante.usuario_id}>
+                            <p>{participante.nombre_usuario}</p>
+                            <button onClick={() => eliminarJugador(participante.usuario_id)}>Eliminar</button>
+                        </div>
+                    ))}
+                </div>
+            )}
             <div>
                 {emparejamientos.map((pareja, index) => (
                     <div key={index}>
