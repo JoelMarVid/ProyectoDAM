@@ -15,6 +15,8 @@ function createWindow() {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false,
       webSecurity: false,
+      nodeIntegration: true,
+      contextIsolation: false,
     }
   })
 
