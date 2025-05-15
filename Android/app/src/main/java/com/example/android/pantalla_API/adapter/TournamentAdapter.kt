@@ -1,10 +1,14 @@
 package com.example.android.pantalla_API.adapter
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -12,15 +16,29 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.R
 import com.example.android.pantalla_API.model.Tournament
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.MediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.Response
+import org.json.JSONObject
+import java.io.IOException
 
-class TournamentAdapter(private val tournaments: List<Tournament>) : RecyclerView.Adapter<TournamentAdapter.TournamentViewHolder>() {
-    class TournamentViewHolder(view: View): RecyclerView.ViewHolder(view){
+class TournamentAdapter(
+    private val tournaments: List<Tournament>,
+    private val userId: String,
+    private val userName: String
+) : RecyclerView.Adapter<TournamentAdapter.TournamentViewHolder>() {
+    class TournamentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvName: TextView = view.findViewById(R.id.tvTournamentName)
         val tvDate: TextView = view.findViewById(R.id.tvTournamentDate)
+        val btnAccept: Button = view.findViewById(R.id.btnTournamentAction)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TournamentViewHolder {
-        val  view = LayoutInflater.from(parent.context)
+        val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_tournament, parent, false)
         return TournamentViewHolder(view)
     }
@@ -28,8 +46,58 @@ class TournamentAdapter(private val tournaments: List<Tournament>) : RecyclerVie
     override fun onBindViewHolder(holder: TournamentViewHolder, position: Int) {
         val tournament = tournaments[position]
         holder.tvName.text = tournament.nombre
-        holder.tvDate.text= "Inicio de inscripciones: ${tournament.fecha_ini} - Fin de inscripciones: ${tournament.fecha_fin} - Dia del torneo ${tournament.dia_torn}"
+        holder.tvDate.text =
+            "Inicio de inscripciones: ${tournament.fecha_ini} - Fin de inscripciones: ${tournament.fecha_fin} - Dia del torneo ${tournament.dia_torn}"
+
+        holder.btnAccept.setOnClickListener {
+            acceptTournament(holder.itemView.context, tournament)
+        }
+
     }
 
     override fun getItemCount(): Int = tournaments.size
+
+    private fun acceptTournament(context: Context, tournament: Tournament) {
+        val url = "http://10.0.2.2:3000/auth/acceptTournament"
+        val client = OkHttpClient()
+        val json = JSONObject().apply {
+            put("torneo_id", tournament.id)
+            put("nombre", tournament.nombre)
+            put("nombre_juego", tournament.nombre_juego)
+            put("fecha_ini", tournament.fecha_ini)
+            put("fecha_fin", tournament.fecha_fin)
+            put("dia_torn", tournament.dia_torn)
+            put("usuario_id", userId)
+            put("nombre_usuario", userName)
+        }
+
+        val requestBody = RequestBody.create(
+            MediaType.parse("application/json; charset=utf-8"),
+            json.toString()
+        )
+
+        val request = Request.Builder()
+            .url(url)
+            .post(requestBody)
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                (context as? Activity)?.runOnUiThread {
+                    Toast.makeText(context, "Error al aceptar torneo", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                (context as? Activity)?.runOnUiThread {
+                    if (response.isSuccessful) {
+                        Toast.makeText(context, "Torneo aceptado", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(context, "Ya has aceptado este torneo", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            }
+        })
+    }
 }

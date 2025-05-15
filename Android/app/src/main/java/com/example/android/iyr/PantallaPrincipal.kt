@@ -73,8 +73,15 @@ class PantallaPrincipal : AppCompatActivity() {
         val response = sendPostRequest(url, json)
         withContext(Dispatchers.Main) {
             if (response != null) {
+                val responseJson = JSONObject(response)
+                val usuario = responseJson.getJSONObject("usuario")
+                val userId = usuario.optString("id", "")
+                val userName = usuario.optString("nombre", "")
+
                 val sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE)
                 val editor=sharedPreferences.edit()
+                editor.putString("userId", userId)
+                editor.putString("userName", userName)
                 editor.putString("userEmail", email)
                 editor.putBoolean("isLoggedIn", true)
                 editor.apply()

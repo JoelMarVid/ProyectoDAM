@@ -40,6 +40,10 @@ class TournamentsActivity : AppCompatActivity() {
         tvTitle.text = "Torneos de $gameName"
         rvTournaments.layoutManager = LinearLayoutManager(this)
 
+        val sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE)
+        val userId = sharedPreferences.getString("userId", "") ?: ""
+        val userName = sharedPreferences.getString("userName", "") ?: ""
+
         fetchTournamentsByGame(gameName) { list ->
             runOnUiThread {
                 if (list.isNullOrEmpty()) {
@@ -47,7 +51,7 @@ class TournamentsActivity : AppCompatActivity() {
                 } else {
                     Log.d("MINE", "Torneos recibidos: $tournaments")
                     tournaments.addAll(list)
-                    rvTournaments.adapter = TournamentAdapter(tournaments)
+                    rvTournaments.adapter = TournamentAdapter(tournaments, userId, userName)
                 }
             }
         }
@@ -81,6 +85,7 @@ class TournamentsActivity : AppCompatActivity() {
                         for (i in 0 until tournamentsArray.length()) {
                             val tournamentJson = tournamentsArray.getJSONObject(i)
                             val tournament = Tournament(
+                                id = tournamentJson.getInt("id"),
                                 nombre = tournamentJson.getString("nombre"),
                                 nombre_juego = tournamentJson.getString("nombre_juego"),
                                 fecha_ini = tournamentJson.getString("fecha_ini"),
