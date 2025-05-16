@@ -1,7 +1,10 @@
 package com.example.android.pantalla_API
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.android.R
 import kotlinx.coroutines.CoroutineScope
@@ -18,13 +21,24 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
 
         val sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE)
-        val userEmail = sharedPreferences.getString("userEmail","") ?: ""
+        val userEmail = sharedPreferences.getString("userEmail", "") ?: ""
 
+        val btnVerTorneosAceptados = findViewById<Button>(R.id.btnVerTorneosAceptados)
+        btnVerTorneosAceptados.setOnClickListener {
+            val sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE)
+            val userId = sharedPreferences.getString("userId", "") ?: ""
+            if (userId.isNotEmpty()) {
+                val intent = Intent(this, TorneosAceptadosActivity::class.java)
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "No se encontró el usuario", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         val usernameTextView = findViewById<TextView>(R.id.usernameTextView)
         val emailTextView = findViewById<TextView>(R.id.emailTextView)
-        emailTextView.text=userEmail
-        if (userEmail.isNotEmpty()){
+        emailTextView.text = userEmail
+        if (userEmail.isNotEmpty()) {
             CoroutineScope(Dispatchers.Main).launch {
                 val nombre = fetchUserProfile(userEmail)
                 usernameTextView.text = nombre
