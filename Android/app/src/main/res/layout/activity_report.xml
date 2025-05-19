@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="Motivo del reporte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/editTextMotivo"
+        android:hint="Escribe el motivo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minLines="3"
+        android:gravity="top|start"
+        android:inputType="textMultiLine"/>
+
+    <Button
+        android:id="@+id/buttonEnviarReporte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enviar reporte"
+        android:layout_marginTop="16dp"/>
+</LinearLayout>

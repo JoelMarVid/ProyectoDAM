@@ -16,6 +16,12 @@
         android:theme="@style/Theme.Android"
         tools:targetApi="31">
         <activity
+            android:name=".pantalla_API.VerReportesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".pantalla_API.ReportActivity"
+            android:exported="false" />
+        <activity
             android:name=".pantalla_API.TorneosAceptadosActivity"
             android:exported="false" />
         <activity

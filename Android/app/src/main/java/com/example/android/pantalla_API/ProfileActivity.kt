@@ -2,6 +2,7 @@ package com.example.android.pantalla_API
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -22,10 +23,21 @@ class ProfileActivity : AppCompatActivity() {
 
         val sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE)
         val userEmail = sharedPreferences.getString("userEmail", "") ?: ""
+        val rol = sharedPreferences.getString("userRol", "")
 
         val btnVerTorneosAceptados = findViewById<Button>(R.id.btnVerTorneosAceptados)
+        val btnVerReportes = findViewById<Button>(R.id.btnVerReportes)
+
+        if (rol == "admin" || rol == "Admin"){
+            btnVerReportes.visibility = View.VISIBLE
+            btnVerReportes.setOnClickListener {
+                startActivity(Intent(this, VerReportesActivity::class.java))
+            }
+        }else{
+            btnVerReportes.visibility = View.GONE
+        }
+
         btnVerTorneosAceptados.setOnClickListener {
-            val sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE)
             val userId = sharedPreferences.getString("userId", "") ?: ""
             if (userId.isNotEmpty()) {
                 val intent = Intent(this, TorneosAceptadosActivity::class.java)

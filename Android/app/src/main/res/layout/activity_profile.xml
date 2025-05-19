@@ -27,4 +27,11 @@
         android:layout_height="wrap_content"
         android:text="Ver torneos aceptados"/>
 
+    <Button
+        android:id="@+id/btnVerReportes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ver reportes"
+        android:visibility="gone"/>
+
 </LinearLayout>

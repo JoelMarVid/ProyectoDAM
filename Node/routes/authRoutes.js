@@ -110,6 +110,7 @@ router.delete("/tournaments/:id", async (req, res) => {
         return res.status(404).json({ error: "No se encontró el torneo" })
     }
 
+    db.query("DELETE FROM emparejamientos WHERE torneo_id = ?", [id])
     db.query("DELETE FROM tournamentsaccept WHERE torneo_id = ?", [id])
     db.query("DELETE FROM tournaments WHERE id = ?", [id])
     db.query("DELETE FROM reportes WHERE torneo_id = ?", [id])

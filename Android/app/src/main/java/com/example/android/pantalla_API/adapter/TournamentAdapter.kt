@@ -2,6 +2,7 @@ package com.example.android.pantalla_API.adapter
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.R
+import com.example.android.pantalla_API.ReportActivity
 import com.example.android.pantalla_API.model.Tournament
 import okhttp3.Call
 import okhttp3.Callback
@@ -35,6 +37,7 @@ class TournamentAdapter(
         val tvName: TextView = view.findViewById(R.id.tvTournamentName)
         val tvDate: TextView = view.findViewById(R.id.tvTournamentDate)
         val btnAccept: Button = view.findViewById(R.id.btnTournamentAction)
+        val btnReportar: Button = view.findViewById(R.id.btnReportar)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TournamentViewHolder {
@@ -51,6 +54,13 @@ class TournamentAdapter(
 
         holder.btnAccept.setOnClickListener {
             acceptTournament(holder.itemView.context, tournament)
+        }
+
+        holder.btnReportar.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, ReportActivity::class.java)
+            intent.putExtra("torneo_id", tournament.id.toString())
+            context.startActivity(intent)
         }
 
     }

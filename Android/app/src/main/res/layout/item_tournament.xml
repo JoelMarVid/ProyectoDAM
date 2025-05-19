@@ -20,4 +20,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Aceptar"/>
+
+    <Button
+        android:id="@+id/btnReportar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reportar"/>
 </LinearLayout>
