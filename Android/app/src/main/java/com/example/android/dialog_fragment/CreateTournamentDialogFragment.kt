@@ -57,7 +57,7 @@ class CreateTournamentDialogFragment : DialogFragment() {
         val datePicker = DatePickerDialog(
             requireContext(),
             { _, year, month, dayOfMonth ->
-                val selectedDate = "${dayOfMonth.toString().padStart(2, '0')}/${(month + 1).toString().padStart(2, '0')}/$year"
+                val selectedDate = "$year-${(month + 1).toString().padStart(2, '0')}-${dayOfMonth.toString().padStart(2, '0')}"
                 onDateSelected(selectedDate)
             },
             calendar.get(Calendar.YEAR),

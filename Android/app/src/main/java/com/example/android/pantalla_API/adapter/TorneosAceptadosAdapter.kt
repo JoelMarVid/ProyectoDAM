@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.android.R
 import com.example.android.pantalla_API.model.Tournament
 import org.w3c.dom.Text
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class TorneosAceptadosAdapter(private val tournaments: List<Tournament>) :
     RecyclerView.Adapter<TorneosAceptadosAdapter.ViewHolder>() {
@@ -36,11 +39,37 @@ class TorneosAceptadosAdapter(private val tournaments: List<Tournament>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val torneo = tournaments[position]
+
+        fun soloFecha(fecha: String): String {
+            return try {
+                when {
+                    fecha.length == 10 -> fecha
+                    fecha.contains("T") -> fecha.substring(0, 10)
+                    else -> fecha
+                }
+            } catch (e: Exception) {
+                fecha
+            }
+        }
+
+        fun sumarUnDia(fecha: String): String {
+            return try {
+                val formato = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val date = formato.parse(fecha)
+                val calendar = Calendar.getInstance()
+                calendar.time = date!!
+                calendar.add(Calendar.DAY_OF_MONTH, 1)
+                formato.format(calendar.time)
+            } catch (e: Exception) {
+                fecha
+            }
+        }
+
         holder.nombre.text = torneo.nombre
         holder.juego.text = torneo.nombre_juego
-        holder.fechaIni.text = "Inicio: ${torneo.fecha_ini}"
-        holder.fechaFin.text = "Fin: ${torneo.fecha_fin}"
-        holder.diaTorn.text = "Dia: ${torneo.dia_torn}"
+        holder.fechaIni.text = "Inicio: ${sumarUnDia(soloFecha(torneo.fecha_ini))}"
+        holder.fechaFin.text = "Fin: ${sumarUnDia(soloFecha(torneo.fecha_fin))}"
+        holder.diaTorn.text = "Dia: ${soloFecha(torneo.dia_torn)}"
     }
 
     override fun getItemCount() = tournaments.size

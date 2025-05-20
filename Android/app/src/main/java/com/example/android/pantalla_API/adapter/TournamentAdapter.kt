@@ -27,6 +27,9 @@ import okhttp3.RequestBody
 import okhttp3.Response
 import org.json.JSONObject
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class TournamentAdapter(
     private val tournaments: List<Tournament>,
@@ -49,8 +52,34 @@ class TournamentAdapter(
     override fun onBindViewHolder(holder: TournamentViewHolder, position: Int) {
         val tournament = tournaments[position]
         holder.tvName.text = tournament.nombre
+
+        fun soloFecha(fecha: String): String {
+            return try {
+                when {
+                    fecha.length == 10 -> fecha
+                    fecha.contains("T") -> fecha.substring(0, 10)
+                    else -> fecha
+                }
+            } catch (e: Exception) {
+                fecha
+            }
+        }
+
+        fun sumarUnDia(fecha: String): String {
+            return try {
+                val formato = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val date = formato.parse(fecha)
+                val calendar = Calendar.getInstance()
+                calendar.time = date!!
+                calendar.add(Calendar.DAY_OF_MONTH, 1)
+                formato.format(calendar.time)
+            } catch (e: Exception) {
+                fecha
+            }
+        }
+
         holder.tvDate.text =
-            "Inicio de inscripciones: ${tournament.fecha_ini} - Fin de inscripciones: ${tournament.fecha_fin} - Dia del torneo ${tournament.dia_torn}"
+            "Inicio de inscripciones: ${sumarUnDia(soloFecha(tournament.fecha_ini))} - Fin de inscripciones: ${sumarUnDia(soloFecha(tournament.fecha_fin))} - Dia del torneo ${sumarUnDia(soloFecha(tournament.dia_torn))}"
 
         holder.btnAccept.setOnClickListener {
             acceptTournament(holder.itemView.context, tournament)

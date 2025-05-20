@@ -9,6 +9,12 @@ const Torneo = () => {
     const navigate = useNavigate()
     const [tournamentsData, setTournamentsData] = useState([])
 
+    const formatDate = (date) => {
+        const d = new Date(date)
+        d.setDate(d.getDate() + 1)
+        return d.toISOString().split("T")[0]
+    }
+
     const aceptarTournaments = async (tournaments) => {
         const userId = localStorage.getItem("userId")
         const userName = localStorage.getItem("userName")
@@ -17,9 +23,9 @@ const Torneo = () => {
                 torneo_id: tournaments.id,
                 nombre: tournaments.nombre,
                 nombre_juego: tournaments.nombre_juego,
-                fecha_ini: tournaments.fecha_ini,
-                fecha_fin: tournaments.fecha_fin,
-                dia_torn: tournaments.dia_torn,
+                fecha_ini: formatDate(tournaments.fecha_ini),
+                fecha_fin: formatDate(tournaments.fecha_fin),
+                dia_torn: formatDate(tournaments.dia_torn),
                 usuario_id: userId,
                 nombre_usuario: userName
             })

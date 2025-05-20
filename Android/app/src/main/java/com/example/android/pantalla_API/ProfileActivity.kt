@@ -47,6 +47,12 @@ class ProfileActivity : AppCompatActivity() {
             }
         }
 
+        val btnVerCalendario = findViewById<Button>(R.id.btnVerCalendario)
+        btnVerCalendario.setOnClickListener {
+            val intent = Intent(this, CalendarActivity::class.java)
+            startActivity(intent)
+        }
+
         val usernameTextView = findViewById<TextView>(R.id.usernameTextView)
         val emailTextView = findViewById<TextView>(R.id.emailTextView)
         emailTextView.text = userEmail
