@@ -99,13 +99,39 @@ class TournamentAdapter(
     private fun acceptTournament(context: Context, tournament: Tournament) {
         val url = "http://10.0.2.2:3000/auth/acceptTournament"
         val client = OkHttpClient()
+
+        fun soloFecha(fecha: String): String {
+            return try {
+                when {
+                    fecha.length == 10 -> fecha
+                    fecha.contains("T") -> fecha.substring(0, 10)
+                    else -> fecha
+                }
+            } catch (e: Exception) {
+                fecha
+            }
+        }
+
+        fun sumarUnDia(fecha: String): String {
+            return try {
+                val formato = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                val date = formato.parse(fecha)
+                val calendar = Calendar.getInstance()
+                calendar.time = date!!
+                calendar.add(Calendar.DAY_OF_MONTH, 1)
+                formato.format(calendar.time)
+            } catch (e: Exception) {
+                fecha
+            }
+        }
+
         val json = JSONObject().apply {
             put("torneo_id", tournament.id)
             put("nombre", tournament.nombre)
             put("nombre_juego", tournament.nombre_juego)
             put("fecha_ini", tournament.fecha_ini)
             put("fecha_fin", tournament.fecha_fin)
-            put("dia_torn", tournament.dia_torn)
+            put("dia_torn", sumarUnDia(soloFecha(tournament.dia_torn)))
             put("usuario_id", userId)
             put("nombre_usuario", userName)
         }

@@ -231,8 +231,8 @@ router.post('/emparejamientos/:torneo_id', async (req, res) => {
         }
         res.status(201).send('Emparejamientos guardados correctamente.');
     } catch (error) {
-        console.error('Error al guardar los emparejamientos:', error);
-        res.status(500).send('Error al guardar los emparejamientos.');
+        console.error('Error al guardar los emparejamientos:', error)
+        res.status(500).send('Error al guardar los emparejamientos.')
     }
 });
 

@@ -1,9 +1,11 @@
 package com.example.android.pantalla_API.adapter
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +13,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.R
+import com.example.android.pantalla_API.EmparejamientoActivity
 import com.example.android.pantalla_API.model.Tournament
 import org.w3c.dom.Text
 import java.text.SimpleDateFormat
@@ -26,6 +29,7 @@ class TorneosAceptadosAdapter(private val tournaments: List<Tournament>) :
         val fechaIni: TextView = view.findViewById(R.id.tvTournamentFechaIni)
         val fechaFin: TextView = view.findViewById(R.id.tvTournamentFechaFin)
         val diaTorn: TextView = view.findViewById(R.id.tvTournamentDiaTorn)
+        val btnEmparejamiento: Button = view.findViewById(R.id.btnEmparejamiento)
     }
 
     override fun onCreateViewHolder(
@@ -63,6 +67,13 @@ class TorneosAceptadosAdapter(private val tournaments: List<Tournament>) :
             } catch (e: Exception) {
                 fecha
             }
+        }
+
+        holder.btnEmparejamiento.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, EmparejamientoActivity::class.java)
+            intent.putExtra("TORNEO_ID", torneo.id)
+            context.startActivity(intent)
         }
 
         holder.nombre.text = torneo.nombre
