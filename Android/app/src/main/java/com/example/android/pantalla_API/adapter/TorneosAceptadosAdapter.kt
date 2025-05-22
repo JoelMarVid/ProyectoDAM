@@ -13,6 +13,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.R
+import com.example.android.pantalla_API.ChatTorneoActivity
 import com.example.android.pantalla_API.EmparejamientoActivity
 import com.example.android.pantalla_API.model.Tournament
 import org.w3c.dom.Text
@@ -30,6 +31,7 @@ class TorneosAceptadosAdapter(private val tournaments: List<Tournament>) :
         val fechaFin: TextView = view.findViewById(R.id.tvTournamentFechaFin)
         val diaTorn: TextView = view.findViewById(R.id.tvTournamentDiaTorn)
         val btnEmparejamiento: Button = view.findViewById(R.id.btnEmparejamiento)
+        val btnChatTorneo: Button = view.findViewById(R.id.btnChatTorneo)
     }
 
     override fun onCreateViewHolder(
@@ -73,6 +75,13 @@ class TorneosAceptadosAdapter(private val tournaments: List<Tournament>) :
             val context = holder.itemView.context
             val intent = Intent(context, EmparejamientoActivity::class.java)
             intent.putExtra("TORNEO_ID", torneo.id)
+            context.startActivity(intent)
+        }
+
+        holder.btnChatTorneo.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, ChatTorneoActivity::class.java)
+            intent.putExtra("torneoId", torneo.id.toString())
             context.startActivity(intent)
         }
 

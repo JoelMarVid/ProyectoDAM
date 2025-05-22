@@ -12,10 +12,13 @@ import VerReportes from "./components/VerReportes"
 import VerParticipante from "./components/verParticipante"
 import CalendarioTorneos from "./components/CalendarioTorneos"
 import Emparejamiento from "./components/Emparejamiento"
+import ChatTorneo from "./components/ChatTorneo"
 
 const App = () => {
   const navigate = useNavigate()
   const location = useLocation()
+  const userId = localStorage.getItem("userId")
+  const userName = localStorage.getItem("userName")
 
   useEffect(() => {
     const token = localStorage.getItem("authToken")
@@ -31,14 +34,15 @@ const App = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/verPerfil" element={<VerPerfil />} />
-      <Route path="/crear-torneo" element={<CrearTorneos/>}/>
-      <Route path="/verTorneos" element={<VerTorneos/>}/>
-      <Route path="/torneos/:name" element={<Torneo/>}/>
-      <Route path="/report/:torneo_id" element={<Reportes/>}/>
-      <Route path="/verReportes" element={<VerReportes/>}/>
-      <Route path="/verParticipantes/:id" element={<VerParticipante/>}/>
-      <Route path="/Calendario" element={<CalendarioTorneos/>}/>
-      <Route path="/emparejamiento/:id" element={<Emparejamiento/>}/>
+      <Route path="/crear-torneo" element={<CrearTorneos />} />
+      <Route path="/verTorneos" element={<VerTorneos />} />
+      <Route path="/torneos/:name" element={<Torneo />} />
+      <Route path="/report/:torneo_id" element={<Reportes />} />
+      <Route path="/verReportes" element={<VerReportes />} />
+      <Route path="/verParticipantes/:id" element={<VerParticipante />} />
+      <Route path="/Calendario" element={<CalendarioTorneos />} />
+      <Route path="/emparejamiento/:id" element={<Emparejamiento />} />
+      <Route path="/chatTorneo/:torneo_id" element={<ChatTorneo usuario_id={userId} nombre_usuario={userName}/>} />
     </Routes>
   )
 }

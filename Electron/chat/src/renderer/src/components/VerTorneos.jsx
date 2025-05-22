@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ChatTorneo from "./ChatTorneo";
 
 const VerTorneos = () => {
     const userId = localStorage.getItem("userId")
@@ -36,6 +37,7 @@ const VerTorneos = () => {
                         <p>Fecha del torneo: {new Date(tournaments.dia_torn).toLocaleDateString()}</p>
                         <button id="button" onClick={() => navigate(`/verParticipantes/${tournaments.torneo_id}`)}>Ver participantes</button>
                         <button id="button" onClick={() => navigate(`/emparejamiento/${tournaments.torneo_id}`)}>Emparejamiento</button>
+                        <button id="button" onClick={() => navigate(`/chatTorneo/${tournaments.torneo_id}`)}>Chat</button>
                     </div>
                 ))
             ) : (

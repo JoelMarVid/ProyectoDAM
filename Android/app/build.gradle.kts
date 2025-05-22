@@ -41,6 +41,7 @@ android {
 
 dependencies {
     implementation (libs.kotlinx.coroutines.android)
+    implementation (libs.socket.io.client)
     implementation(platform(libs.firebase.bom))
     implementation (libs.firebase.auth.ktx)
     implementation (libs.retrofit)

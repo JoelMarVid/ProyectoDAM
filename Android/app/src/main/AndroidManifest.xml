@@ -16,6 +16,9 @@
         android:theme="@style/Theme.Android"
         tools:targetApi="31">
         <activity
+            android:name=".pantalla_API.ChatTorneoActivity"
+            android:exported="false" />
+        <activity
             android:name=".pantalla_API.EmparejamientoActivity"
             android:exported="false" />
         <activity
