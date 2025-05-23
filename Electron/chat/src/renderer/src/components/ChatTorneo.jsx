@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios"
 import io from "socket.io-client"
 
 const socket = io("http://localhost:3000")
@@ -11,6 +12,11 @@ const ChatTorneo = ({ usuario_id, nombre_usuario }) => {
     const [mensajes, setMensajes] = useState([])
 
     useEffect(() => {
+
+        axios.get(`http://localhost:3000/auth/chat_torneo/${torneo_id}`)
+            .then(res => setMensajes(res.data))
+            .catch(() => setMensajes([]))
+
         socket.emit("join_tournament", { torneo_id, usuario_id, nombre_usuario})
 
         socket.on("chat_message", (msg) => {

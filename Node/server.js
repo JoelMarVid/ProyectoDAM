@@ -2,6 +2,7 @@ import express from "express"
 import cors from "cors"
 import http from "http"
 import { Server } from "socket.io"
+import db from "./config/db.js"
 import dotenv from "dotenv"
 import router from "./routes/authRoutes.js"
 
@@ -23,6 +24,12 @@ io.on("connection", (socket) => {
     })
 
     socket.on("chat_message", ({torneo_id, usuario_id, nombre_usuario, mensaje}) => {
+
+        db.query(
+            "INSERT INTO chat_torneo (torneo_id, usuario_id, nombre_usuario, mensaje) VALUES (?, ?, ?, ?)",
+            [torneo_id, usuario_id, nombre_usuario, mensaje]
+        )
+
         io.to(`torneo_${torneo_id}`).emit('chat_message', {
             usuario_id,
             nombre_usuario,

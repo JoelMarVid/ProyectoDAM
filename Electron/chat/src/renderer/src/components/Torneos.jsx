@@ -4,7 +4,6 @@ import axios from "axios"
 import "../assets/Torneos.css"
 
 const Torneo = () => {
-    const { Notification } = window.require("electron")
     const { name } = useParams()
     const navigate = useNavigate()
     const [tournamentsData, setTournamentsData] = useState([])
@@ -30,18 +29,10 @@ const Torneo = () => {
                 nombre_usuario: userName
             })
             alert("Torneo aceptado")
-            showNotification("Torneo aceptado", "Has aceptado un torneo")
         } catch (error) {
             console.error(error)
             alert("Error al aceptar el torneo")
         }
-    }
-
-    const showNotification = (title, message) => {
-        new window.Notification(title, {
-            body: message
-        })
-        console.log("Notification sent")
     }
 
     useEffect(() => {

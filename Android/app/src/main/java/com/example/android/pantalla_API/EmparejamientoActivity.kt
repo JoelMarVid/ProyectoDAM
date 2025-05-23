@@ -11,7 +11,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.android.R
 import com.example.android.pantalla_API.model.Participante
-import com.google.api.Distribution.BucketOptions.Linear
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.MediaType

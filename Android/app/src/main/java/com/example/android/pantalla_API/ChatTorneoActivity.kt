@@ -13,7 +13,14 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.android.R
 import io.socket.client.IO
 import io.socket.client.Socket
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import org.json.JSONArray
 import org.json.JSONObject
+import java.io.IOException
 
 class ChatTorneoActivity : AppCompatActivity() {
     private lateinit var socket: Socket
@@ -33,6 +40,10 @@ class ChatTorneoActivity : AppCompatActivity() {
         scrollView = findViewById(R.id.scrollView)
         val inputMensaje = findViewById<EditText>(R.id.inputMensaje)
         val btnEnviar = findViewById<Button>(R.id.btnEnviar)
+
+        if (torneoId != null) {
+            cargarHistorial(torneoId)
+        }
 
         socket = IO.socket("http://10.0.2.2:3000")
         socket.connect()
@@ -68,6 +79,32 @@ class ChatTorneoActivity : AppCompatActivity() {
                 inputMensaje.text.clear()
             }
         }
+    }
+
+    private fun cargarHistorial(torneoId: String) {
+        val url = "http://10.0.2.2:3000/auth/chat_torneo/$torneoId"
+        val client = OkHttpClient()
+        val request = Request.Builder().url(url).build()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {}
+            override fun onResponse(call: Call, response: Response) {
+                if (response.isSuccessful) {
+                    val jsonArray = JSONArray(response.body()?.string() ?: "[]")
+                    runOnUiThread {
+                        mensajesLayout.removeAllViews()
+                        for (i in 0 until jsonArray.length()) {
+                            val obj = jsonArray.getJSONObject(i)
+                            val nombre = obj.getString("nombre_usuario")
+                            val mensaje = obj.getString("mensaje")
+                            val tv = TextView(this@ChatTorneoActivity)
+                            tv.text = "$nombre: $mensaje"
+                            mensajesLayout.addView(tv)
+                        }
+                        scrollView.post { scrollView.fullScroll(ScrollView.FOCUS_DOWN) }
+                    }
+                }
+            }
+        })
     }
 
     override fun onDestroy() {

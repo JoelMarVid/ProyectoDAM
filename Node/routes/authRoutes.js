@@ -235,6 +235,15 @@ router.post('/emparejamientos/:torneo_id', async (req, res) => {
     }
 });
 
+router.get("/chat_torneo/:torneo_id", async (req, res) => {
+    const {torneo_id} = req.params
+    const [rows] = await db.query(
+        "SELECT usuario_id, nombre_usuario, mensaje, fecha FROM chat_torneo WHERE torneo_id = ? ORDER BY fecha ASC",
+        [torneo_id]
+    )
+    res.json(rows)
+})
+
 
 
 export default router
