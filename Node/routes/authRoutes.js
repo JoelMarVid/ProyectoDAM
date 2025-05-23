@@ -2,7 +2,6 @@ import express from "express"
 import db from "../config/db.js"
 import bcrypt from "bcryptjs"
 import jwr from "jsonwebtoken"
-import admin from "../config/firebase.js"
 
 const router = express.Router()
 
