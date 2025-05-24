@@ -37,7 +37,7 @@ const ChatTorneo = ({ usuario_id, nombre_usuario }) => {
 
     return (
         <div>
-            <div style={{ height: 300, overflowY: "auto", border: "1px solid #ccc", marginBottom: 10 }}>
+            <div style={{ height: 300, overflowY: "auto", border: "1px solid #ccc", marginBottom: 10, background: "#282828", color: "#fff", minHeight: 400, padding: 20, borderRadius: 10}}>
                 {mensajes.map((msg, idx) => (
                     <div key={idx}>
                         <b>{msg.nombre_usuario}:</b> {msg.mensaje}
