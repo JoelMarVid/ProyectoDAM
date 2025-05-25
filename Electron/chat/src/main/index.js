@@ -1,4 +1,5 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import path from 'path'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
@@ -8,6 +9,7 @@ function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 1000,
     height: 1000,
+    icon: path.join(__dirname, '../../resources/Logotipo.ico'),
     show: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
@@ -20,6 +22,7 @@ function createWindow() {
     }
   })
 
+  console.log(path.join(__dirname))
   
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
