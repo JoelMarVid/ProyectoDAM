@@ -1,8 +1,20 @@
 <resources>
     <string-array name="lista_juegos">
-        <item>League of Legends</item>
+        <item>LoL</item>
         <item>Valorant</item>
         <item>Overwatch</item>
+        <item>Dota 2</item>
+        <item>Counter-Strike</item>
+        <item>Mobile Legends: Bang Bang</item>
+        <item>Call of Duty</item>
+        <item>StarCraft Brood War</item>
+        <item>StarCraft 2</item>
+        <item>LoL Wild Rift</item>
+        <item>King of Glory</item>
+        <item>EA Sports FC</item>
+        <item>Rainbow 6 Siege</item>
+        <item>Rocket League</item>
+        <item>PUBG</item>
     </string-array>
     <string name="app_name">Android</string>
 </resources>

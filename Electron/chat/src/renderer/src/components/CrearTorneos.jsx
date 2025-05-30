@@ -47,12 +47,24 @@ const CrearTorneos = () => {
                     value={nombre}
                     onChange={(e) => setNombre(e.target.value)}
                 />
-                <input
-                    type="text"
-                    placeholder="Nombre del juego"
-                    value={nombre_juego}
-                    onChange={(e) => setNombreJuego(e.target.value)}
-                />
+                <select value={nombre_juego} onChange={(e) => setNombreJuego(e.target.value)}>
+                    <option value="">Selecciona un juego</option>
+                    <option value="LoL">LoL</option>
+                    <option value="Valorant">Valorant</option>
+                    <option value="Dota 2">Dota 2</option>
+                    <option value="Counter-Strike">Counter-Strike</option>
+                    <option value="Mobile Legends: Bang Bang">Mobile Legends: Bang Bang</option>
+                    <option value="Call of Duty">Call of Duty</option>
+                    <option value="StarCraft Brood War">StarCraft Brood War</option>
+                    <option value="StarCraft 2">StarCraft 2</option>
+                    <option value="Lol Wild Rift">LoL Wild Rift</option>
+                    <option value="King of Glory">King of Glory</option>
+                    <option value="EA Sports FC">EA Sports FC</option>
+                    <option value="Rainbow 6 Siege">Rainbow 6 Siege</option>
+                    <option value="Rocket League">Rocket League</option>
+                    <option value="PUBG">PUBG</option>
+                    <option value="Overwatch">Overwatch</option>
+                </select>
                 <input
                     type="date"
                     placeholder="Fecha de inicio"
