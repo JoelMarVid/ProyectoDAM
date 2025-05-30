@@ -15,7 +15,7 @@
 
     <ImageView
         android:id="@+id/profileImageView"
-        android:src="@android:drawable/ic_menu_camera"
+        android:src="@drawable/menu_hamburguesa"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:scaleType="centerCrop"

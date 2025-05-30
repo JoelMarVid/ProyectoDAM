@@ -6,7 +6,4 @@
     <item
         android:id="@+id/menu_logout"
         android:title="Cerrar sesión" />
-    <item
-        android:id="@+id/menu_settings"
-        android:title="Ajustes" />
 </menu>

@@ -95,10 +95,6 @@ class PantallaAPI : AppCompatActivity() {
                         logout()
                         true
                     }
-                    R.id.menu_settings ->{
-                        Toast.makeText(this, "Ajustes Seleccionados", Toast.LENGTH_SHORT).show()
-                        true
-                    }
                     else -> false
                 }
             }
