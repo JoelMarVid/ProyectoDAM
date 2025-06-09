@@ -125,6 +125,7 @@ router.post("/acceptTournament", async (req, res) => {
     }
 
     db.query("INSERT INTO tournamentsaccept (torneo_id, nombre_torneo, nombre_juego, fecha_ini, fecha_fin, dia_torn, usuario_id, nombre_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", [torneo_id, nombre, nombre_juego, fecha_ini, fecha_fin, dia_torn, usuario_id, nombre_usuario])
+    res.status(200).json({ message: "Torneo aceptado correctamente" })
 })
 
 router.get("/acceptTournament/:userId", async (req, res) => {
@@ -165,6 +166,7 @@ router.post("/report/:torneoId", async (req, res) => {
         return res.status(400).json({ error: "Ya has reportado este torneo" })
     }
     db.query("INSERT INTO reportes (torneo_id, nombre_usuario, motivo) VALUES (?, ?, ?)", [torneoId, usuario_name, motivo])
+    res.status(200).json({ message: "Reporte creado correctamente" })
 })
 
 router.delete("/report/:id", async (req, res) => {

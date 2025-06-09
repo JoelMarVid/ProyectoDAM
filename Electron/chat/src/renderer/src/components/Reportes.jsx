@@ -10,14 +10,13 @@ const Reportes = () => {
     console.log(torneo_id)
     const handleSubmit = async (e) => {
         e.preventDefault()
-        toast.success("Reporte enviado exitosamente.")
-        navigate("/dashboard")
         try {
             await axios.post(`http://localhost:3000/auth/report/${torneo_id}`, {
                 usuario_name: localStorage.getItem("userName"),
                 motivo: motivo
             })
-
+            toast.success("Reporte enviado exitosamente.")
+            navigate("/dashboard")
         } catch (error) {
             console.error(error)
             toast.error("Error al enviar el reporte")
