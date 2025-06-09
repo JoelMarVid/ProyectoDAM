@@ -14,6 +14,7 @@ const Profile = () => {
         localStorage.removeItem("authToken")
         localStorage.removeItem("userName")
         localStorage.removeItem("userId")
+        toast.info("Sesión cerrada exitosamente")
         navigate("/login")
     }
 

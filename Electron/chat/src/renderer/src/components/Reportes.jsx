@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Reportes = () => {
     const [motivo, setMotivo] = useState("")
@@ -15,12 +16,12 @@ const Reportes = () => {
                 usuario_name: localStorage.getItem("userName"),
                 motivo: motivo
             })
-           
+
         } catch (error) {
             console.error(error)
-            alert("Error al enviar el reporte")
+            toast.error("Error al enviar el reporte")
         }
-        alert("Reporte enviado exitosamente.")
+        toast.success("Reporte enviado exitosamente.")
     }
 
     return (

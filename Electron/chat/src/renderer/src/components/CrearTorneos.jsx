@@ -1,6 +1,7 @@
 import axios from "axios"
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 
 const CrearTorneos = () => {
     const navigate = useNavigate()
@@ -14,12 +15,12 @@ const CrearTorneos = () => {
         e.preventDefault()
         navigate("/dashboard")
         if (!nombre || !nombre_juego || !fecha_ini || !fecha_fin || !dia_torn) {
-            alert("Por favor, completa todos los campos.")
+            toast.error("Por favor, completa todos los campos.")
             return
         }
 
         if (new Date(fecha_ini) > new Date(fecha_fin)) {
-            alert("La fecha de inicio no puede ser mayor que la fecha de fin.")
+            toast.error("La fecha de inicio no puede ser mayor que la fecha de fin.")
             return
         }
 
@@ -31,7 +32,7 @@ const CrearTorneos = () => {
                 fecha_fin,
                 dia_torn
             })
-            alert("Torneo creado exitosamente.")
+            toast.success("Torneo creado exitosamente")
         } catch (error) {
             console.error(error)
         }

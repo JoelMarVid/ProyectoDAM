@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import axios from "axios"
 import "../assets/Torneos.css"
+import { toast } from "react-toastify"
 
 const Torneo = () => {
     const { name } = useParams()
@@ -28,10 +29,10 @@ const Torneo = () => {
                 usuario_id: userId,
                 nombre_usuario: userName
             })
-            alert("Torneo aceptado")
+            toast.success("Torneo aceptado exitosamente")
         } catch (error) {
             console.error(error)
-            alert("Error al aceptar el torneo")
+            toast.error("Error al aceptar el torneo")
         }
     }
 

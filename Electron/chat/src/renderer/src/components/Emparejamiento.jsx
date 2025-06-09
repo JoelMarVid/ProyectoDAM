@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
 import { useNavigate, useParams } from "react-router-dom"
+import { toast } from "react-toastify"
 
 const Emparejamiento = () => {
     const { id } = useParams()
@@ -43,11 +44,12 @@ const Emparejamiento = () => {
         }
 
         if (participantesRestantes.length === 1) {
-            alert(`El participante ${participantesRestantes[0].nombre_usuario} quedó sin pareja.`)
+            toast.error(`El participante ${participantesRestantes[0].nombre_usuario} quedó sin pareja.`)
         }
 
         await axios.post(`http://localhost:3000/auth/emparejamientos/${id}`, nuevosEmparejamientos)
         const emparejamientosRes = await axios.get(`http://localhost:3000/auth/emparejamientos/${id}`);
+        toast.success("Emparejamiento realizado exitosamente")
         setEmparejamientos(emparejamientosRes.data)
     }
 
@@ -57,9 +59,9 @@ const Emparejamiento = () => {
             setParticipantes(participantes.filter((p) => p.usuario_id !== jugadorId))
             const emparejamientosRes = await axios.get(`http://localhost:3000/auth/emparejamientos/${id}`);
             setEmparejamientos(emparejamientosRes.data);
-            alert("Jugador eliminado correctamente")
+            toast.success("Jugador eliminado correctamente")
         } catch (error) {
-            console.error("Error al eliminar el jugador:", error)
+            toast.error("Error al eliminar el jugador:", error)
         }
     }
 

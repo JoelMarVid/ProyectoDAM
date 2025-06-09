@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
 import "../assets/styles.css"
+import { toast } from "react-toastify"
 
 const Register = () => {
     const [nombre, setNombre] = useState("")
@@ -19,6 +20,7 @@ const Register = () => {
                 password
             })
             setMessage(res.data.message)
+            toast.success("Registro exitoso")
             setTimeout(() => navigate("/login"), 2000) 
         } catch (error) {
             setMessage(error.response.data.error || "Error en el registro")
