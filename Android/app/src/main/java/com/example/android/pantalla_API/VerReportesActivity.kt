@@ -1,5 +1,6 @@
 package com.example.android.pantalla_API
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.LinearLayout
@@ -88,6 +89,9 @@ class VerReportesActivity : AppCompatActivity() {
 
             override fun onResponse(call: Call, response: Response) {
                 runOnUiThread { recreate() }
+                val intent = Intent(this@VerReportesActivity, PantallaAPI::class.java)
+                startActivity(intent)
+                finish()
             }
 
         })
@@ -101,6 +105,9 @@ class VerReportesActivity : AppCompatActivity() {
             override fun onFailure(call: Call, e: IOException) {}
             override fun onResponse(call: Call, response: Response) {
                 runOnUiThread { recreate() }
+                val intent = Intent(this@VerReportesActivity, PantallaAPI::class.java)
+                startActivity(intent)
+                finish()
             }
         })
     }

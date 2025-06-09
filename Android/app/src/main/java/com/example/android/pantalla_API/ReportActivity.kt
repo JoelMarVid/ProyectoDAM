@@ -1,5 +1,6 @@
 package com.example.android.pantalla_API
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -65,6 +66,8 @@ class ReportActivity : AppCompatActivity() {
                 runOnUiThread {
                     if (response.isSuccessful){
                         Toast.makeText(this@ReportActivity, "Reporte enviado", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@ReportActivity, PantallaAPI::class.java)
+                        startActivity(intent)
                         finish()
                     }else{
                         Toast.makeText(this@ReportActivity, "Ya has reportado este torneo", Toast.LENGTH_SHORT).show()
