@@ -13,6 +13,7 @@ const CrearTorneos = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        toast.success("Torneo creado exitosamente")
         navigate("/dashboard")
         if (!nombre || !nombre_juego || !fecha_ini || !fecha_fin || !dia_torn) {
             toast.error("Por favor, completa todos los campos.")
@@ -32,7 +33,6 @@ const CrearTorneos = () => {
                 fecha_fin,
                 dia_torn
             })
-            toast.success("Torneo creado exitosamente")
         } catch (error) {
             console.error(error)
         }

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {toast} from "react-toastify"
 import "../assets/Profile.css";
 import { useNavigate } from "react-router-dom";
 
