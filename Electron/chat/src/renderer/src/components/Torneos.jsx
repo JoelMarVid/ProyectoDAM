@@ -16,6 +16,7 @@ const Torneo = () => {
     }
 
     const aceptarTournaments = async (tournaments) => {
+        toast.success("Torneo aceptado exitosamente")
         const userId = localStorage.getItem("userId")
         const userName = localStorage.getItem("userName")
         try {
@@ -29,7 +30,6 @@ const Torneo = () => {
                 usuario_id: userId,
                 nombre_usuario: userName
             })
-            toast.success("Torneo aceptado exitosamente")
         } catch (error) {
             console.error(error)
             toast.error("Error al aceptar el torneo")

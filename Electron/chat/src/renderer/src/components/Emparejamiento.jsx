@@ -26,6 +26,7 @@ const Emparejamiento = () => {
     }, [id])
 
     const realizarEmparejamiento = async () => {
+        toast.success("Emparejamiento realizado exitosamente")
         const participantesRestantes = [...participantes]
         const nuevosEmparejamientos = []
 
@@ -49,17 +50,16 @@ const Emparejamiento = () => {
 
         await axios.post(`http://localhost:3000/auth/emparejamientos/${id}`, nuevosEmparejamientos)
         const emparejamientosRes = await axios.get(`http://localhost:3000/auth/emparejamientos/${id}`);
-        toast.success("Emparejamiento realizado exitosamente")
         setEmparejamientos(emparejamientosRes.data)
     }
 
     const eliminarJugador = async (jugadorId) => {
+        toast.success("Jugador eliminado correctamente")
         try {
             await axios.delete(`http://localhost:3000/auth/eliminarJugador/${jugadorId}`)
             setParticipantes(participantes.filter((p) => p.usuario_id !== jugadorId))
             const emparejamientosRes = await axios.get(`http://localhost:3000/auth/emparejamientos/${id}`);
             setEmparejamientos(emparejamientosRes.data);
-            toast.success("Jugador eliminado correctamente")
         } catch (error) {
             toast.error("Error al eliminar el jugador:", error)
         }

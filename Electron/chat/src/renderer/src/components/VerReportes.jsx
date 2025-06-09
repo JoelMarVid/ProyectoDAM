@@ -22,20 +22,20 @@ const VerReportes = () => {
     }, [])
 
     const deleteTournament = async (id) => {
+        toast.success("Reporte aceptado")
         setReportesData(reportesData.filter((reportes) => reportes.torneo_id !== id))
         try {
             await axios.delete(`http://localhost:3000/auth/tournaments/${id}`)
-            toast.success("Reporte aceptado")
         } catch (error) {
             toast.error("Error al aceptar el reporte")
         }
     }
 
     const deleteReport = async (id) => {
+        toast.success("Reporte rechazado")
         setReportesData(reportesData.filter((reportes) => reportes.id !== id))
         try {
             await axios.delete(`http://localhost:3000/auth/report/${id}`)
-            toast.success("Reporte rechazado")
         } catch (error) {
             toast.error("Error al rechazar el reporte")
         }
